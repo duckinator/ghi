@@ -1,0 +1,80 @@
+"""Github-Human Interface
+
+Ghi is a tool for making the management of issues and PRs across a large
+number of projects simpler.
+"""
+import itertools
+from pathlib import Path
+from . import graphql
+
+from pprint import pprint
+
+class Ghi:
+    """"Provides the core functionality of Ghi.
+    """
+
+    query = Path(__file__).with_name('query.graphql').read_text()
+
+    def __init__(self, args):
+        self.data = None
+        self._repositories = None
+
+    def fetch_data(self):
+        if self.data is not None:
+            return
+
+        self.data = graphql.request(self.query)['data']
+        self.rate_limit = self.data['rateLimit']
+        self.viewer = self.data['viewer']
+
+    def github_username(self):
+        return self.viewer['login']
+
+    def _user_repos(self):
+        return self.viewer['repositories']['nodes']
+
+    def _org_repos(self):
+        repos = map(lambda x: x['repositories']['nodes'], self.viewer['organizations']['nodes'])
+        return list(itertools.chain.from_iterable(repos))
+
+    @staticmethod
+    def _repo_is_ignored(repo):
+        return repo['nameWithOwner'] in config.ignored()
+
+    def _repo_is_relevant(self, repo):
+        archived = repo['isArchived']
+        has_issues = len(repo['issues']['nodes']) > 0
+        has_prs = len(repo['pullRequests']['nodes']) > 0
+
+        return (not archived) and \
+                (has_issues or has_prs) and \
+                (not self._repo_is_ignored(repo))
+
+
+    def repositories(self):
+        if self._repositories is not None:
+            return self._repositories
+
+        repo_sort = lambda x: x['nameWithOwner']
+        repos = self._user_repos() + self._org_repos()
+        repos = filter(self._repo_is_relevant, repos)
+        self._repositories = sorted(repos, key=repo_sort)
+        return self._repositories
+
+    def print_rate_limit(self):
+        for (k, v) in self.rate_limit.items():
+            print("{}={}".format(k, v))
+
+    def print_repo_summaries(self, repos):
+        for repo in repos:
+            print('- {} ({} issues, {} PRs)'.format(repo['nameWithOwner'],
+                len(repo['issues']['nodes']),
+                len(repo['pullRequests']['nodes'])))
+
+    def run(self):
+        self.fetch_data()
+
+        print('Username: {}'.format(self.github_username()))
+        print('Repositories:')
+
+        self.print_repo_summaries(self.repositories())

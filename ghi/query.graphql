@@ -1,0 +1,49 @@
+query {
+  rateLimit {
+    limit
+    cost
+    remaining
+    resetAt
+  }
+
+  viewer {
+    login
+    repositories(last: 40) {
+      ...repoListWithIssuesPRs
+    }
+    organizations(last: 20) {
+      nodes {
+        repositories(last: 40) {
+          ...repoListWithIssuesPRs
+        }
+      }
+    }
+  }
+}
+
+fragment repoListWithIssuesPRs on RepositoryConnection {
+  nodes {
+    nameWithOwner
+    url
+    shortDescriptionHTML
+    isArchived
+
+    pullRequests(last: 50, states: [OPEN]) {
+      nodes {
+        title
+        lastEditedAt
+        body
+        url
+      }
+    }
+
+    issues(last: 50, states: [OPEN]) {
+      nodes {
+        title
+        lastEditedAt
+        body
+        url
+      }
+    }
+  }
+}
