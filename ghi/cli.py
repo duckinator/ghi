@@ -10,7 +10,9 @@ def _parse_args(args):
         argument_default=SUPPRESS,
     )
 
-    # TODO
+    # There's no actual command-line arguments.
+    # I just figured I'd include the plumbing for it before it was needed.
+    # -@duckinator
 
     return argparser.parse_args(args)
 
