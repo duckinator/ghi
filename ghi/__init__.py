@@ -5,9 +5,9 @@ number of projects simpler.
 """
 import itertools
 from pathlib import Path
+from . import config
 from . import graphql
 
-from pprint import pprint
 
 class Ghi:
     """"Provides the core functionality of Ghi.
@@ -16,8 +16,11 @@ class Ghi:
     query = Path(__file__).with_name('query.graphql').read_text()
 
     def __init__(self, args):
+        self.args = args
         self.data = None
+        self.rate_limit = None
         self._repositories = None
+        self.viewer = None
 
     def fetch_data(self):
         if self.data is not None:
@@ -34,7 +37,8 @@ class Ghi:
         return self.viewer['repositories']['nodes']
 
     def _org_repos(self):
-        repos = map(lambda x: x['repositories']['nodes'], self.viewer['organizations']['nodes'])
+        repos = map(lambda x: x['repositories']['nodes'],
+                    self.viewer['organizations']['nodes'])
         return list(itertools.chain.from_iterable(repos))
 
     @staticmethod
@@ -46,28 +50,32 @@ class Ghi:
         has_issues = len(repo['issues']['nodes']) > 0
         has_prs = len(repo['pullRequests']['nodes']) > 0
 
-        return (not archived) and \
-                (has_issues or has_prs) and \
-                (not self._repo_is_ignored(repo))
+        return (not archived) \
+            and (has_issues or has_prs) \
+            and (not self._repo_is_ignored(repo))
 
+    @staticmethod
+    def _repo_name(repo):
+        return repo['nameWithOwner']
 
     def repositories(self):
         if self._repositories is not None:
             return self._repositories
 
-        repo_sort = lambda x: x['nameWithOwner']
         repos = self._user_repos() + self._org_repos()
         repos = filter(self._repo_is_relevant, repos)
-        self._repositories = sorted(repos, key=repo_sort)
+        self._repositories = sorted(repos, key=self._repo_name)
         return self._repositories
 
     def print_rate_limit(self):
-        for (k, v) in self.rate_limit.items():
-            print("{}={}".format(k, v))
+        for (key, val) in self.rate_limit.items():
+            print("{}={}".format(key, val))
 
-    def print_repo_summaries(self, repos):
+    @staticmethod
+    def print_repo_summaries(repos):
         for repo in repos:
-            print('- {} ({} issues, {} PRs)'.format(repo['nameWithOwner'],
+            print('- {} ({} issues, {} PRs)'.format(
+                repo['nameWithOwner'],
                 len(repo['issues']['nodes']),
                 len(repo['pullRequests']['nodes'])))
 

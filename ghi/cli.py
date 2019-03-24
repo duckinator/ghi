@@ -1,8 +1,8 @@
 """Command-line interface.
 """
 from argparse import ArgumentParser, SUPPRESS
-from pathlib import Path
 from . import Ghi
+
 
 def _parse_args(args):
     argparser = ArgumentParser(
@@ -13,6 +13,7 @@ def _parse_args(args):
     # TODO
 
     return argparser.parse_args(args)
+
 
 def main(args=None):
     """Invoke ghi from command-line arguments.
