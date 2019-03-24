@@ -25,6 +25,41 @@ $ dnf install ??? -\-refresh
 ```
 -->
 
+## Configuration
+
+To avoid errors due to hitting rate limits, GHI requires a Personal
+Access Token for GitHub.
+
+### Acquiring A Personal Access Token
+
+To acquire a personal access token:
+
+1. Go to: https://github.com/settings/tokens/new
+2. For `Token description`, enter `ghi CLI client`.
+3. Scroll to the bottom of the page.
+4. Click `Generate token`. This will take you to a new page.
+5. Save the token somewhere. **You can't access it again.**
+
+### Configuration File
+
+Make a file, `$HOME/.config/ghi/config.json`:
+
+```
+{
+  "github": {
+    "token": "<GITHUB TOKEN>"
+  },
+  "ignored": [
+    "some/repository-you-dont-care-about",
+    "some-other/repositoriy"
+  ]
+}
+```
+
+## Usage
+
+After configuring it, just run `ghi`.
+
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/duckinator/emanate. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
