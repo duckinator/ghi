@@ -35,9 +35,6 @@ class Issues(tkinter.Frame):
             self.listbox.insert('end', item)
         print('Done.')
 
-        # TODO: Check if theres >0 issues before calling .select(0).
-        self.select(0)
-
     def select(self, n):
         # Select item +n+.
         self.listbox.select_set(n)
@@ -46,6 +43,6 @@ class Issues(tkinter.Frame):
     def select_callback(self, event):
         widget = event.widget
         print(widget.curselection())
-        #index = int(widget.curselection()[0])
-        #value = widget.get(index)
-        #print('Selected issue: {} {}'.format(index, value))
+        index = int(widget.curselection()[0])
+        value = widget.get(index)
+        print('Selected issue: {} {}'.format(index, value))

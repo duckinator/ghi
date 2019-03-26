@@ -37,5 +37,3 @@ class Details(tkinter.Frame):
         self.name.href = repo_url
         self.summary.config(text=summary)
         self.notebook.populate(data)
-        from pprint import pprint
-        pprint(self.ghi.repositories()[index])

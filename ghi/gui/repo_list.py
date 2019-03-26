@@ -22,7 +22,10 @@ class RepoList(tkinter.Frame):
 
     def select_callback(self, event):
         widget = event.widget
-        print(widget)
+        selection = widget.curselection()
 
-        index = int(widget.curselection()[0])
+        if len(selection) == 0:
+            return
+
+        index = int(selection[0])
         self.parent.details.select_repo(index)
