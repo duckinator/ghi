@@ -28,12 +28,12 @@ class RepoList(tkinter.Frame):
         index = int(selection[0])
         self._select_callback(widget, index)
 
-    def populate(self, repo_data):
+    def populate(self, repositories):
         # FIXME: Actually determine the number to delete.
         self.listbox.delete(0, 999999999)
 
         print('Populating repository list.')
-        for repo in repo_data:
+        for repo in repositories:
             self.listbox.insert('end', repo['nameWithOwner'])
 
     def _select_callback(self, _widget, index):
