@@ -20,6 +20,9 @@ class RepoList(tkinter.Frame):
         self.listbox.event_generate('<<ListboxSelect>>')
 
     def populate(self):
+        # FIXME: Actually determine the number to delete.
+        self.listbox.delete(0, 999999999)
+
         print('Populating repository list.')
         for repo in self.ghi.repositories():
             self.listbox.insert('end', repo['nameWithOwner'])
