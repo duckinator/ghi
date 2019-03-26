@@ -1,24 +1,7 @@
-"""GUI for Ghi."""
-import sys
-import tkinter as tk
+import tkinter
 from tkinter import tix
-from . import Ghi
 
-class Details(tk.Frame):
-    def __init__(self, root, parent, ghi):
-        super().__init__(root) # initialize tkinter.Frame.
-        self.root = root
-        self.parent = parent
-        self.ghi = ghi
-        self.summary = tk.Label(text="awoo")
-        self.summary.grid(row=0, column=1)
-
-    def select_repo(self, index, repo):
-        print("Details.select_repo: {} {}".format(index, repo))
-        self.summary.config(text=repo)
-
-
-class RepoList(tk.Frame):
+class RepoList(tkinter.Frame):
     def __init__(self, root, parent, ghi):
         super().__init__(root) # initialize tkinter.Frame.
         self.root = root
@@ -49,24 +32,3 @@ class RepoList(tk.Frame):
     def add_event_handlers(self):
         print("Adding event handlers.")
         self.repos.listbox.bind('<<ListboxSelect>>', self.select_repo)
-
-
-class Gui(tk.Frame):
-    def __init__(self, root=None):
-        if root is None:
-            root = tix.Tk()
-        super().__init__(root)
-
-        self.ghi = Ghi()
-        self.root = root
-        self.repo_list = RepoList(self.root, self, self.ghi)
-        self.details = Details(self.root, self, self.ghi)
-
-    def run(self):
-        self.repo_list.populate()
-        self.repo_list.select(0)
-        self.root.mainloop()
-
-def main(args=None):
-    """Start ghi's GUI."""
-    return Gui().run()
