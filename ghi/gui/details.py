@@ -8,10 +8,7 @@ class Details(tkinter.Frame):
         self.ghi = ghi
 
         self.name = tkinter.Label(text='')
-        self.name.grid(row=0, column=1)
-
         self.summary = tkinter.Label(text='')
-        self.summary.grid(row=1, column=1)
 
     def select_repo(self, index, repo):
         print('details.select_repo({}, {})'.format(index, repo))

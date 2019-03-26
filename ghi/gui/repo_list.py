@@ -7,11 +7,7 @@ class RepoList(tkinter.Frame):
         self.root = root
         self.parent = parent
         self.ghi = ghi
-
         self.repos = tix.ScrolledListBox(self.root, width=0, height=0)
-        # FIXME: Make self.repos fill all rows!
-        self.repos.grid(row=0, column=0, rowspan=2)
-
         self.add_event_handlers()
 
     def select(self, n):

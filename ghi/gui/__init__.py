@@ -17,9 +17,15 @@ class Gui(tkinter.Frame):
         self.repo_list = RepoList(self.root, self, self.ghi)
         self.details = Details(self.root, self, self.ghi)
 
+    def arrange(self):
+        self.repo_list.repos.grid(row=0, column=0, rowspan=2)
+        self.details.name.grid(row=0, column=1)
+        self.details.summary.grid(row=1, column=1)
+
     def run(self):
         self.repo_list.populate()
         self.repo_list.select(0)
+        self.arrange()
         self.root.mainloop()
 
 
