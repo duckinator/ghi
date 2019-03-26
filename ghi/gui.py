@@ -14,6 +14,12 @@ class Gui:
         import code
         code.interact(local=locals())
 
+    def select_repo(self, event):
+        widget = event.widget
+        index = int(widget.curselection()[0])
+        value = widget.get(index)
+        print("Selected {}: {}".format(index, value))
+
     def populate_repos(self):
         print("Populating repos.")
         for repo in self.ghi.repositories():
@@ -26,12 +32,6 @@ class Gui:
         print("Arranging widgets.")
         self.repos.grid(row=0, column=0)
         self.details.grid(row=0, column=1)
-
-    def select_repo(self, event):
-        widget = event.widget
-        index = int(widget.curselection()[0])
-        value = widget.get(index)
-        print("Selected {}: {}".format(index, value))
 
     def add_event_handlers(self):
         print("Adding event handlers.")
