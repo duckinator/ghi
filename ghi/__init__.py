@@ -30,12 +30,15 @@ class Ghi:
         self.viewer = self.data['viewer']
 
     def github_username(self):
+        self.fetch_data()
         return self.viewer['login']
 
     def _user_repos(self):
+        self.fetch_data()
         return self.viewer['repositories']['nodes']
 
     def _org_repos(self):
+        self.fetch_data()
         repos = map(lambda x: x['repositories']['nodes'],
                     self.viewer['organizations']['nodes'])
         return list(itertools.chain.from_iterable(repos))
