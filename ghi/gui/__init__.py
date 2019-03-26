@@ -6,12 +6,16 @@ from .repo_list import RepoList
 from .details import Details
 
 from . import grid
+from . import window
 
 class Gui(tkinter.Frame):
     def __init__(self, root=None):
         if root is None:
             root = tix.Tk()
         super().__init__(root)
+
+        window.load_state(root.winfo_toplevel())
+        root.bind('<Configure>', self.on_configure)
 
         self.root = root
         self.repo_list = RepoList(self)
@@ -35,6 +39,9 @@ class Gui(tkinter.Frame):
     def run(self):
         self.populate()
         self.root.mainloop()
+
+    def on_configure(self, event):
+        window.save_state(self.root.winfo_toplevel())
 
 
 def main(args=None):
