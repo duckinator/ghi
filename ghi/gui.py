@@ -7,7 +7,7 @@ class Gui:
     def __init__(self):
         self.ghi = Ghi()
         self.root = tix.Tk()
-        self.repos = tix.ScrolledListBox(self.root)
+        self.repos = tix.ScrolledListBox(self.root, name='repos')
         self.details = tix.ScrolledText(self.root)
 
     def debug(self):
@@ -27,8 +27,15 @@ class Gui:
         self.repos.grid(row=0, column=0)
         self.details.grid(row=0, column=1)
 
+    def select_repo(self, event):
+        widget = event.widget
+        index = int(widget.curselection()[0])
+        value = widget.get(index)
+        print("Selected {}: {}".format(index, value))
+
     def add_event_handlers(self):
         print("Adding event handlers.")
+        self.repos.listbox.bind('<<ListboxSelect>>', self.select_repo)
 
     def run(self):
         self.arrange()
