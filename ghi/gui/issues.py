@@ -1,11 +1,12 @@
 import tkinter
 from tkinter import tix
+import webbrowser
 
 from .ghi_listbox import GhiListbox
 from .button_link import ButtonLink
 from .utils import pluralize
 
-class Issues(GhiListbox):
+class IssueList(GhiListbox):
     def _populate(self, repo_data, key='issues'):
         self._data = repo_data[key]['nodes']
 
@@ -25,5 +26,29 @@ class Issues(GhiListbox):
         print('Done.')
 
     def _select_callback(self, widget, index):
-        value = widget.get(index)
-        print('Selected issue: {} {}'.format(index, value))
+        self.root.update(self._data[index])
+
+class Issues(tkinter.Frame):
+    def __init__(self, root):
+        super().__init__(root) # initialize tkinter.Frame.
+        self.root = root
+        self.list = self.build_list()
+
+        self.title = ButtonLink(self, text='', href='')
+        self.body = tkinter.Label(self, text='')
+
+        self.list.grid(row=0, column=0)
+        self.title.grid(row=0, column=1)
+        self.body.grid(row=1, column=1)
+
+    def build_list(self):
+        return IssueList(self)
+
+    def populate(self, *args, **kwargs):
+        self.list.populate(*args, **kwargs)
+
+    def update(self, issue):
+        title = '#{} - {}'.format(issue['number'], issue['title'])
+        self.title.configure(text=title)
+        self.title.href = issue['url']
+        self.body.configure(text=issue['body'])
