@@ -1,52 +1,71 @@
 """GUI for Ghi."""
 import sys
+import tkinter as tk
 from tkinter import tix
 from . import Ghi
 
-class Gui:
-    def __init__(self):
-        self.ghi = Ghi()
-        self.root = tix.Tk()
-        self.repos = tix.ScrolledListBox(self.root, name='repos')
-        self.details = tix.ScrolledText(self.root)
+class Details(tk.Frame):
+    def __init__(self, root, parent, ghi):
+        super().__init__(root) # initialize tkinter.Frame.
+        self.root = root
+        self.parent = parent
+        self.ghi = ghi
+        self.summary = tk.Label(text="awoo")
+        self.summary.grid(row=0, column=1)
 
-    def debug(self):
-        import code
-        code.interact(local=locals())
+    def select_repo(self, index, repo):
+        print("Details.select_repo: {} {}".format(index, repo))
+        self.summary.config(text=repo)
+
+
+class RepoList(tk.Frame):
+    def __init__(self, root, parent, ghi):
+        super().__init__(root) # initialize tkinter.Frame.
+        self.root = root
+        self.parent = parent
+        self.ghi = ghi
+
+        self.repos = tix.ScrolledListBox(self.root, width=0, height=0)
+        self.repos.grid(row=0, column=0)
+
+        self.add_event_handlers()
+
+    def select(self, n):
+        # Select item +n+.
+        self.repos.listbox.select_set(n)
+        self.repos.listbox.event_generate("<<ListboxSelect>>")
+
+    def populate(self):
+        print("Populating repository list.")
+        for repo in self.ghi.repositories():
+            self.repos.listbox.insert('end', repo['nameWithOwner'])
 
     def select_repo(self, event):
         widget = event.widget
         index = int(widget.curselection()[0])
         value = widget.get(index)
-        print("Selected {}: {}".format(index, value))
-
-    def populate_repos(self):
-        print("Populating repos.")
-        for repo in self.ghi.repositories():
-            self.repos.listbox.insert('end', repo['nameWithOwner'])
-
-    def populate(self):
-        self.populate_repos()
-
-    def arrange(self):
-        print("Arranging widgets.")
-        self.repos.grid(row=0, column=0)
-        self.details.grid(row=0, column=1)
+        self.parent.details.select_repo(index, value)
 
     def add_event_handlers(self):
         print("Adding event handlers.")
         self.repos.listbox.bind('<<ListboxSelect>>', self.select_repo)
 
+
+class Gui(tk.Frame):
+    def __init__(self, root=None):
+        if root is None:
+            root = tix.Tk()
+        super().__init__(root)
+
+        self.ghi = Ghi()
+        self.root = root
+        self.repo_list = RepoList(self.root, self, self.ghi)
+        self.details = Details(self.root, self, self.ghi)
+
     def run(self):
-        self.arrange()
-        self.populate()
-        self.add_event_handlers()
-        if '--debug' in sys.argv:
-            print("Entering debugger.")
-            self.debug()
-        else:
-            print("Running main loop.")
-            self.root.mainloop()
+        self.repo_list.populate()
+        self.repo_list.select(0)
+        self.root.mainloop()
 
 def main(args=None):
     """Start ghi's GUI."""
