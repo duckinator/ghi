@@ -2,9 +2,12 @@ import tkinter
 from tkinter import tix
 import webbrowser
 
+
 from .ghi_listbox import GhiListbox
 from .button_link import ButtonLink
 from .utils import pluralize
+from . import grid
+
 
 class IssueList(GhiListbox):
     def _populate(self, repo_data, key='issues'):
@@ -37,9 +40,13 @@ class Issues(tkinter.Frame):
         self.title = ButtonLink(self, text='', href='')
         self.body = tkinter.Label(self, text='')
 
-        self.list.grid(row=0, column=0)
-        self.title.grid(row=0, column=1)
-        self.body.grid(row=1, column=1)
+        self.list.grid(row=0, column=0, rowspan=2, sticky='nsew')
+        self.title.grid(row=0, column=1, sticky='nsew')
+        self.body.grid(row=1, column=1, sticky='nsew')
+
+        grid.weight(self, 0, 0, weight=0)
+        grid.weight(self, 1, 1, weight=0)
+        grid.weight(self, 2, 1, weight=1)
 
     def build_list(self):
         return IssueList(self)
