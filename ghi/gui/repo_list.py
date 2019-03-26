@@ -9,17 +9,18 @@ class RepoList(tkinter.Frame):
         self.ghi = ghi
 
         self.repos = tix.ScrolledListBox(self.root, width=0, height=0)
-        self.repos.grid(row=0, column=0)
+        # FIXME: Make self.repos fill all rows!
+        self.repos.grid(row=0, column=0, rowspan=2)
 
         self.add_event_handlers()
 
     def select(self, n):
         # Select item +n+.
         self.repos.listbox.select_set(n)
-        self.repos.listbox.event_generate("<<ListboxSelect>>")
+        self.repos.listbox.event_generate('<<ListboxSelect>>')
 
     def populate(self):
-        print("Populating repository list.")
+        print('Populating repository list.')
         for repo in self.ghi.repositories():
             self.repos.listbox.insert('end', repo['nameWithOwner'])
 
@@ -30,5 +31,5 @@ class RepoList(tkinter.Frame):
         self.parent.details.select_repo(index, value)
 
     def add_event_handlers(self):
-        print("Adding event handlers.")
+        print('Adding event handlers.')
         self.repos.listbox.bind('<<ListboxSelect>>', self.select_repo)
