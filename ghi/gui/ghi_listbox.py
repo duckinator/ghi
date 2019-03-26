@@ -5,6 +5,7 @@ class GhiListbox(tkinter.Frame):
     def __init__(self, root):
         super().__init__(root) # initialize tkinter.Frame.
         self.root = root
+        self._data = None
 
         self.scrolled_listbox = tix.ScrolledListBox(self, width=0, height=0)
         self.listbox = self.scrolled_listbox.listbox

@@ -6,14 +6,14 @@ from .button_link import ButtonLink
 from .utils import pluralize
 
 class Issues(GhiListbox):
-    def _populate(self, repo_data):
-        self._issues = repo_data['issues']['nodes']
+    def _populate(self, repo_data, key='issues'):
+        self._data = repo_data[key]['nodes']
 
-        biggest = max(map(lambda issue: issue['number'], self._issues))
+        biggest = max(map(lambda issue: issue['number'], self._data))
         zero_pad = len(str(biggest))
 
-        print('Populating issues:')
-        for issue in self._issues:
+        print('Populating {}:'.format(key))
+        for issue in self._data:
             issue_number = str(issue['number']).zfill(zero_pad)
             item = ('#{} - {}').format(issue_number, issue['title'])
             print('- {}'.format(item))
