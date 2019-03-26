@@ -1,12 +1,12 @@
-import tkinter
 from tkinter import ttk
 
 from .issues import Issues
 from .pull_requests import PullRequests
 
+
 class IssuesAndPullRequests(ttk.Notebook):
     def __init__(self, root):
-        super().__init__(root) # initialize tkinter.Frame.
+        super().__init__(root)
         self.root = root
 
         self.issues = Issues(self)

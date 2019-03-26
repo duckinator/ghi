@@ -1,6 +1,3 @@
-import tkinter
-from tkinter import tix
-
 from .ghi_listbox import GhiListbox
 
 

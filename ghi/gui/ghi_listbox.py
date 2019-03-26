@@ -3,9 +3,10 @@ from tkinter import tix
 
 from . import grid
 
+
 class GhiListbox(tkinter.Frame):
     def __init__(self, root):
-        super().__init__(root) # initialize tkinter.Frame.
+        super().__init__(root)
         self.root = root
         self._data = None
 
@@ -37,8 +38,8 @@ class GhiListbox(tkinter.Frame):
         self._populate(data)
         self.select(0)
 
-    def _populate(_self, _repo_data):
+    def _populate(self, _repo_data):
         raise NotImplementedError
 
-    def _select_callback(_self, _widget, _index):
+    def _select_callback(self, _widget, _index):
         raise NotImplementedError

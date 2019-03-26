@@ -5,9 +5,10 @@ from .issues_and_pull_requests import IssuesAndPullRequests
 from .utils import pluralize
 from . import grid
 
+
 class Details(tkinter.Frame):
     def __init__(self, root):
-        super().__init__(root) # initialize tkinter.Frame.
+        super().__init__(root)
         self.root = root
         self.repositories = []
 
@@ -36,7 +37,6 @@ class Details(tkinter.Frame):
 
         name = data['nameWithOwner']
         repo_url = data['url']
-        desc = data['shortDescriptionHTML']
 
         summary = '{}, {}.'.format(
             pluralize(len(issues), 'issue'),

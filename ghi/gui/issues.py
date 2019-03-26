@@ -1,11 +1,7 @@
 import tkinter
-from tkinter import tix
-import webbrowser
 
-
-from .ghi_listbox import GhiListbox
 from .button_link import ButtonLink
-from .utils import pluralize
+from .ghi_listbox import GhiListbox
 from . import grid
 
 
@@ -31,9 +27,10 @@ class IssueList(GhiListbox):
     def _select_callback(self, widget, index):
         self.root.update(self._data[index])
 
+
 class Issues(tkinter.Frame):
     def __init__(self, root):
-        super().__init__(root) # initialize tkinter.Frame.
+        super().__init__(root)
         self.root = root
         self.list = self.build_list()
 

@@ -8,6 +8,7 @@ from .details import Details
 from . import grid
 from . import window
 
+
 class Gui(tkinter.Frame):
     def __init__(self, root=None):
         if root is None:
@@ -40,10 +41,10 @@ class Gui(tkinter.Frame):
         self.populate()
         self.root.mainloop()
 
-    def on_configure(self, event):
+    def on_configure(self, _event):
         window.save_state(self.root.winfo_toplevel())
 
 
-def main(args=None):
+def main():
     """Start ghi's GUI."""
     return Gui().run()

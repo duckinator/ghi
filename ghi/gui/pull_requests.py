@@ -1,6 +1,7 @@
 from .issues import IssueList
 from .issues import Issues
 
+
 class PullRequestList(IssueList):
     def _populate(self, repo_data):
         super()._populate(repo_data, key='pullRequests')

@@ -1,7 +1,7 @@
 """Command-line interface.
 """
-from argparse import ArgumentParser, SUPPRESS
 from . import Ghi
+
 
 class Cli:
     def __init__(self):
@@ -26,7 +26,7 @@ class Cli:
         self.print_repo_summaries(self.ghi.repositories())
 
 
-def main(args=None):
+def main():
     """Invoke ghi from command-line arguments.
     """
     return Cli().run()
