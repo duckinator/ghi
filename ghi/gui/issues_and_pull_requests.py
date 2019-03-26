@@ -12,7 +12,7 @@ class IssuesAndPullRequests(ttk.Notebook):
         self.ghi = ghi
 
         self.issues = Issues(self, ghi)
-        #self.pull_requests = PullRequets(root, self, ghi)
+        #self.pull_requests = PullRequets(self, ghi)
         self.pull_requests = tkinter.Frame(self)
 
         self.add(self.issues, text='Issues')

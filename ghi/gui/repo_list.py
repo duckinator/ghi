@@ -2,13 +2,14 @@ import tkinter
 from tkinter import tix
 
 class RepoList(tkinter.Frame):
-    def __init__(self, root, parent, ghi):
+    def __init__(self, root, ghi):
         super().__init__(root) # initialize tkinter.Frame.
         self.root = root
-        self.parent = parent
         self.ghi = ghi
-        self.repos = tix.ScrolledListBox(self.root, width=0, height=0)
+        self.repos = tix.ScrolledListBox(self, width=0, height=0)
         self.repos.listbox.bind('<<ListboxSelect>>', self.select_callback)
+
+        self.repos.grid(row=0, column=0)
 
     def select(self, index):
         # Select item +index+.
@@ -28,4 +29,4 @@ class RepoList(tkinter.Frame):
             return
 
         index = int(selection[0])
-        self.parent.details.select_repo(index)
+        self.root.details.select_repo(index)
