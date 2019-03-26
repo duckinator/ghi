@@ -47,6 +47,8 @@ class Issues(tkinter.Frame):
             self.listbox.insert('end', item)
         print('Done.')
 
+        self.select(0)
+
     def _select_callback(self, widget, index):
         value = widget.get(index)
         print('Selected issue: {} {}'.format(index, value))

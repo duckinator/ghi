@@ -36,5 +36,7 @@ class RepoList(tkinter.Frame):
         for repo in repositories:
             self.listbox.insert('end', repo['nameWithOwner'])
 
+        self.select(0)
+
     def _select_callback(self, _widget, index):
         self.root.details.select_repo(index)

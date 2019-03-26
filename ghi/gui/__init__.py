@@ -12,13 +12,14 @@ class Gui(tkinter.Frame):
             root = tix.Tk()
         super().__init__(root)
 
-        self.ghi = Ghi()
         self.root = root
         self.repo_list = RepoList(self)
         self.details = Details(self)
 
         self.repo_list.grid(row=0, column=0)
         self.details.grid(row=0, column=1)
+
+        self.grid(row=0, column=0)
 
     def populate(self):
         ghi = Ghi()
@@ -27,11 +28,7 @@ class Gui(tkinter.Frame):
         self.repo_list.populate(repos)
 
     def run(self):
-        self.grid(row=0, column=0)
         self.populate()
-        self.repo_list.select(0)
-        self.details.notebook.issues.select(0)
-        #self.details.notebook.pull_requests.select(0)
         self.root.mainloop()
 
 
