@@ -26,6 +26,8 @@ class Gui(tkinter.Frame):
     def run(self):
         self.repo_list.populate()
         self.repo_list.select(0)
+        self.details.notebook.issues.select(0)
+        #self.details.notebook.pull_requests.select(0)
         self.arrange()
         self.root.mainloop()
 

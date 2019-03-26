@@ -19,8 +19,8 @@ class Issues(tkinter.Frame):
     def populate(self, repo_data):
         self._issues = repo_data['issues']['nodes']
 
-        # This clears _all_ items in the listbox.
-        self.listbox.delete(0)
+        # FIXME: Actually determine the number to delete.
+        self.listbox.delete(0, 999999999)
 
         zero_pad = len(str(len(self._issues)))
         print('zero_pad={}'.format(zero_pad))
@@ -42,7 +42,11 @@ class Issues(tkinter.Frame):
 
     def select_callback(self, event):
         widget = event.widget
-        print(widget.curselection())
-        index = int(widget.curselection()[0])
+        selection = widget.curselection()
+
+        if len(selection) == 0:
+            return
+
+        index = int(selection[0])
         value = widget.get(index)
         print('Selected issue: {} {}'.format(index, value))
