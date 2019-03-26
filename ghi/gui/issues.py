@@ -22,15 +22,13 @@ class Issues(tkinter.Frame):
         # FIXME: Actually determine the number to delete.
         self.listbox.delete(0, 999999999)
 
-        zero_pad = len(str(len(self._issues)))
-        print('zero_pad={}'.format(zero_pad))
+        biggest = max(map(lambda issue: issue['number'], self._issues))
+        zero_pad = len(str(biggest))
 
         print('Populating issues:')
         for issue in self._issues:
-            # FIXME: Include issue number in data.
-            issue_number = issue['url'].split('/')[-1]
-            issue_number = str(issue_number).zfill(zero_pad)
-            item = ('{} {}').format(issue_number, issue['title'])
+            issue_number = str(issue['number']).zfill(zero_pad)
+            item = ('#{} - {}').format(issue_number, issue['title'])
             print('- {}'.format(item))
             self.listbox.insert('end', item)
         print('Done.')
