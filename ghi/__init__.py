@@ -15,8 +15,7 @@ class Ghi:
 
     query = Path(__file__).with_name('query.graphql').read_text()
 
-    def __init__(self, args):
-        self.args = args
+    def __init__(self):
         self.data = None
         self.rate_limit = None
         self._repositories = None
@@ -66,23 +65,3 @@ class Ghi:
         repos = filter(self._repo_is_relevant, repos)
         self._repositories = sorted(repos, key=self._repo_name)
         return self._repositories
-
-    def print_rate_limit(self):
-        for (key, val) in self.rate_limit.items():
-            print("{}={}".format(key, val))
-
-    @staticmethod
-    def print_repo_summaries(repos):
-        for repo in repos:
-            print('- {} ({} issues, {} PRs)'.format(
-                repo['nameWithOwner'],
-                len(repo['issues']['nodes']),
-                len(repo['pullRequests']['nodes'])))
-
-    def run(self):
-        self.fetch_data()
-
-        print('Username: {}'.format(self.github_username()))
-        print('Repositories:')
-
-        self.print_repo_summaries(self.repositories())
