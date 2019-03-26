@@ -3,8 +3,7 @@ from .issues import Issues
 
 
 class PullRequestList(IssueList):
-    def _populate(self, repo_data):
-        super()._populate(repo_data, key='pullRequests')
+    _populate_key = 'pullRequests'
 
     def _select_callback(self, widget, index):
         value = widget.get(index)

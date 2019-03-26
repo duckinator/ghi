@@ -6,17 +6,19 @@ from . import grid
 
 
 class IssueList(GhiListbox):
-    def _populate(self, repo_data, key='issues'):
-        self._data = repo_data[key]['nodes']
+    _populate_key = 'issues'
+
+    def _populate(self, repo_data):
+        self._data = repo_data[self._populate_key]['nodes']
 
         if len(self._data) == 0:
-            print('No {} data.'.format(key))
+            print('No {} data.'.format(self._populate_key))
             return
 
         biggest = max(map(lambda issue: issue['number'], self._data))
         zero_pad = len(str(biggest))
 
-        print('Populating {}:'.format(key))
+        print('Populating {}:'.format(self._populate_key))
         for issue in self._data:
             issue_number = str(issue['number']).zfill(zero_pad)
             item = ('#{} - {}').format(issue_number, issue['title'])
@@ -24,8 +26,8 @@ class IssueList(GhiListbox):
             self.listbox.insert('end', item)
         print('Done.')
 
-    def _select_callback(self, widget, index):
-        self.root.update(self._data[index])
+    def _select_callback(self, _widget, index):
+        self.root.update_data(self._data[index])
 
 
 class Issues(tkinter.Frame):
@@ -51,7 +53,7 @@ class Issues(tkinter.Frame):
     def populate(self, *args, **kwargs):
         self.list.populate(*args, **kwargs)
 
-    def update(self, issue):
+    def update_data(self, issue):
         title = '#{} - {}'.format(issue['number'], issue['title'])
         self.title.configure(text=title)
         self.title.href = issue['url']
