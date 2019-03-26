@@ -1,4 +1,5 @@
 import tkinter
+from .utils import pluralize
 
 class Details(tkinter.Frame):
     def __init__(self, root, parent, ghi):
@@ -18,9 +19,9 @@ class Details(tkinter.Frame):
         pull_requests = data['pullRequests']['nodes']
 
         name = repo
-        summary = '{} issues, {} pull requests.'.format(
-            len(issues),
-            len(pull_requests)
+        summary = '{}, {}.'.format(
+            pluralize(len(issues), 'issue'),
+            pluralize(len(pull_requests), 'pull request'),
         )
 
         self.name.config(text=name)
