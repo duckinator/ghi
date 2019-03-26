@@ -9,6 +9,10 @@ class Issues(GhiListbox):
     def _populate(self, repo_data, key='issues'):
         self._data = repo_data[key]['nodes']
 
+        if len(self._data) == 0:
+            print('No {} data.'.format(key))
+            return
+
         biggest = max(map(lambda issue: issue['number'], self._data))
         zero_pad = len(str(biggest))
 
