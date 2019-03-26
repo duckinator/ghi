@@ -19,7 +19,6 @@ class Gui:
         for repo in self.ghi.repositories():
             self.repos.listbox.insert('end', repo['nameWithOwner'])
 
-
     def populate(self):
         self.populate_repos()
 
