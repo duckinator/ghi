@@ -1,6 +1,7 @@
 import tkinter
 
 from .button_link import ButtonLink
+from .issues_and_pull_requests import IssuesAndPullRequests
 from .utils import pluralize
 
 class Details(tkinter.Frame):
@@ -10,8 +11,11 @@ class Details(tkinter.Frame):
         self.parent = parent
         self.ghi = ghi
 
-        self.name = ButtonLink(self.root, text='', href='')
+        self.name = ButtonLink(root, text='', href='')
         self.summary = tkinter.Label(text='')
+
+        #self.notebook = IssuesAndPullRequests(self, ghi)
+        self.notebook = IssuesAndPullRequests(root, ghi)
 
     def select_repo(self, index, repo):
         print('details.select_repo({}, {})'.format(index, repo))
