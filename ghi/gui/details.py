@@ -1,4 +1,6 @@
 import tkinter
+
+from .button_link import ButtonLink
 from .utils import pluralize
 
 class Details(tkinter.Frame):
@@ -8,7 +10,7 @@ class Details(tkinter.Frame):
         self.parent = parent
         self.ghi = ghi
 
-        self.name = tkinter.Label(text='')
+        self.name = ButtonLink(self.root, text='', href='')
         self.summary = tkinter.Label(text='')
 
     def select_repo(self, index, repo):
@@ -19,12 +21,16 @@ class Details(tkinter.Frame):
         pull_requests = data['pullRequests']['nodes']
 
         name = repo
+        repo_url = data['url']
+        desc = data['shortDescriptionHTML']
+
         summary = '{}, {}.'.format(
             pluralize(len(issues), 'issue'),
             pluralize(len(pull_requests), 'pull request'),
         )
 
         self.name.config(text=name)
+        self.name.href = repo_url
         self.summary.config(text=summary)
         from pprint import pprint
         pprint(self.ghi.repositories()[index])
