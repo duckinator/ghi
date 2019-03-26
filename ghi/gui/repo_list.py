@@ -6,20 +6,23 @@ class RepoList(tkinter.Frame):
         super().__init__(root) # initialize tkinter.Frame.
         self.root = root
         self.ghi = ghi
-        self.repos = tix.ScrolledListBox(self, width=0, height=0)
-        self.repos.listbox.bind('<<ListboxSelect>>', self.select_callback)
 
-        self.repos.grid(row=0, column=0)
+        self.scrolled_listbox = tix.ScrolledListBox(self, width=0, height=0)
+        self.listbox = self.scrolled_listbox.listbox
+
+        self.listbox.bind('<<ListboxSelect>>', self.select_callback)
+
+        self.scrolled_listbox.grid(row=0, column=0)
 
     def select(self, index):
         # Select item +index+.
-        self.repos.listbox.select_set(index)
-        self.repos.listbox.event_generate('<<ListboxSelect>>')
+        self.listbox.select_set(index)
+        self.listbox.event_generate('<<ListboxSelect>>')
 
     def populate(self):
         print('Populating repository list.')
         for repo in self.ghi.repositories():
-            self.repos.listbox.insert('end', repo['nameWithOwner'])
+            self.listbox.insert('end', repo['nameWithOwner'])
 
     def select_callback(self, event):
         widget = event.widget
