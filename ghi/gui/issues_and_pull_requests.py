@@ -17,3 +17,7 @@ class IssuesAndPullRequests(ttk.Notebook):
 
         self.add(self.issues, text='Issues')
         self.add(self.pull_requests, text='Pull Requests')
+
+    def populate(self, repo_data):
+        self.issues.populate(repo_data)
+        #self.pull_requests.populate(repo_data)

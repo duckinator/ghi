@@ -8,11 +8,11 @@ class RepoList(tkinter.Frame):
         self.parent = parent
         self.ghi = ghi
         self.repos = tix.ScrolledListBox(self.root, width=0, height=0)
-        self.add_event_handlers()
+        self.repos.listbox.bind('<<ListboxSelect>>', self.select_callback)
 
-    def select(self, n):
-        # Select item +n+.
-        self.repos.listbox.select_set(n)
+    def select(self, index):
+        # Select item +index+.
+        self.repos.listbox.select_set(index)
         self.repos.listbox.event_generate('<<ListboxSelect>>')
 
     def populate(self):
@@ -20,12 +20,9 @@ class RepoList(tkinter.Frame):
         for repo in self.ghi.repositories():
             self.repos.listbox.insert('end', repo['nameWithOwner'])
 
-    def select_repo(self, event):
+    def select_callback(self, event):
         widget = event.widget
-        index = int(widget.curselection()[0])
-        value = widget.get(index)
-        self.parent.details.select_repo(index, value)
+        print(widget)
 
-    def add_event_handlers(self):
-        print('Adding event handlers.')
-        self.repos.listbox.bind('<<ListboxSelect>>', self.select_repo)
+        index = int(widget.curselection()[0])
+        self.parent.details.select_repo(index)
