@@ -5,15 +5,15 @@ from .issues_and_pull_requests import IssuesAndPullRequests
 from .utils import pluralize
 
 class Details(tkinter.Frame):
-    def __init__(self, root, ghi):
+    def __init__(self, root, repositories):
         super().__init__(root) # initialize tkinter.Frame.
         self.root = root
-        self.ghi = ghi
+        self.repositories = repositories
 
         self.name = ButtonLink(self, text='', href='')
         self.summary = tkinter.Label(self, text='')
 
-        self.notebook = IssuesAndPullRequests(self, ghi)
+        self.notebook = IssuesAndPullRequests(self)
 
         self.name.grid(row=0, column=0)
         self.summary.grid(row=1, column=0)
@@ -22,7 +22,7 @@ class Details(tkinter.Frame):
     def select_repo(self, index):
         print('details.select_repo({})'.format(index))
 
-        data = self.ghi.repositories()[index]
+        data = self.repositories[index]
         issues = data['issues']['nodes']
         pull_requests = data['pullRequests']['nodes']
 

@@ -2,10 +2,9 @@ import tkinter
 from tkinter import tix
 
 class RepoList(tkinter.Frame):
-    def __init__(self, root, ghi):
+    def __init__(self, root):
         super().__init__(root) # initialize tkinter.Frame.
         self.root = root
-        self.ghi = ghi
 
         self.scrolled_listbox = tix.ScrolledListBox(self, width=0, height=0)
         self.listbox = self.scrolled_listbox.listbox
@@ -19,14 +18,6 @@ class RepoList(tkinter.Frame):
         self.listbox.select_set(index)
         self.listbox.event_generate('<<ListboxSelect>>')
 
-    def populate(self):
-        # FIXME: Actually determine the number to delete.
-        self.listbox.delete(0, 999999999)
-
-        print('Populating repository list.')
-        for repo in self.ghi.repositories():
-            self.listbox.insert('end', repo['nameWithOwner'])
-
     def select_callback(self, event):
         widget = event.widget
         selection = widget.curselection()
@@ -35,4 +26,15 @@ class RepoList(tkinter.Frame):
             return
 
         index = int(selection[0])
+        self._select_callback(widget, index)
+
+    def populate(self, repo_data):
+        # FIXME: Actually determine the number to delete.
+        self.listbox.delete(0, 999999999)
+
+        print('Populating repository list.')
+        for repo in repo_data:
+            self.listbox.insert('end', repo['nameWithOwner'])
+
+    def _select_callback(self, _widget, index):
         self.root.details.select_repo(index)
