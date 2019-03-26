@@ -1,12 +1,27 @@
+Lint_task:
+  container:
+    image: python:3.7-slim
+  install_script:
+    - pip install -e .[linting]
+  script:
+    - flake8 --version
+    - flake8
+    - pylint --version
+    - pylint emanate
+
 Linux_task:
+  allow_failures: $CIRRUS_TASK_NAME =~ '.*-rc-.*'
   container:
     matrix:
       - image: python:3.5-slim
       - image: python:3.6-slim
       - image: python:3.7-slim
+      - image: python:3.8-rc-slim
+  install_script:
+    - pip install -e .[testing]
   script:
     - python3 --version
-    - python3 setup.py test
+    - python3 -m pytest --verbose
 
 macOS_task:
   osx_instance:
@@ -24,9 +39,10 @@ macOS_task:
     - pyenv install ${PYTHON}
     - pyenv global ${PYTHON}
     - pyenv rehash
+    - pip install -e .[testing]
   script:
     - python3 --version
-    - python3 setup.py test
+    - python3 -m pytest --verbose
 
 FreeBSD_task:
   freebsd_instance:
@@ -35,18 +51,26 @@ FreeBSD_task:
     matrix:
       - PYTHON: 3.6
       - PYTHON: 3.7
-  install_script: pkg install -y python`echo $PYTHON | tr -d '.'` py`echo $PYTHON | tr -d '.'`-setuptools
+  install_script:
+    - PY=`echo $PYTHON | tr -d '.'`
+    - pkg install -y python${PY} py${PY}-setuptools
+    - python${PYTHON} -m ensurepip
+    - python${PYTHON} -m pip install -e .[testing]
   script:
     - python${PYTHON} --version
-    - python${PYTHON} setup.py test
+    - python${PYTHON} -m pytest --verbose
 
 Windows_task:
+  allow_failures: $CIRRUS_TASK_NAME =~ '.*-rc-.*'
   windows_container:
     os_version: 2019
     matrix:
       - image: python:3.6-windowsservercore-1809
       - image: python:3.7-windowsservercore-1809
+      - image: python:3.8-rc-windowsservercore-1809
 
+  install_script:
+    - C:\Python\python.exe -m pip install -e .[testing]
   script:
     - C:\Python\python.exe --version
-    - C:\Python\python.exe setup.py test
+    - C:\Python\python.exe -m pytest --verbose
