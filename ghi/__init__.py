@@ -60,6 +60,9 @@ class Ghi:
     def _repo_name(repo):
         return repo['nameWithOwner']
 
+    def repository_names(self):
+        return list(map(self._repo_name, self.repositories()))
+
     def repositories(self):
         if self._repositories is not None:
             return self._repositories

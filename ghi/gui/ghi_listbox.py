@@ -15,7 +15,7 @@ class GhiListbox(tkinter.Frame):
         self.listbox.bind('<<ListboxSelect>>', self.select_callback)
 
         self.scrolled_listbox.grid(row=0, column=0, sticky='nsew')
-        grid.weight(self, [0], [0])
+        grid.weight(self, 0, 0, weight=1)
 
     def select(self, index):
         # Select item +index+.

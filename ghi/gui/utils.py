@@ -17,3 +17,8 @@ def pluralize(number, singular, plural=None):
         ret = plural
 
     return '{} {}'.format(number, ret)
+
+
+def listbox_width(items, max_width=30):
+    max_item_width = max(map(lambda string: len(string), items))
+    return min(max_width, max_item_width)

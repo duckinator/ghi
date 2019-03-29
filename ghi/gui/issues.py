@@ -3,6 +3,7 @@ import tkinter
 from .button_link import ButtonLink
 from .ghi_listbox import GhiListbox
 from . import grid
+from . import utils
 
 
 class IssueList(GhiListbox):
@@ -15,16 +16,22 @@ class IssueList(GhiListbox):
             print('No {} data.'.format(self._populate_key))
             return
 
+        # Determine the highest issue number.
         biggest = max(map(lambda issue: issue['number'], self._data))
+        # Calculate the length of +biggest+.
         zero_pad = len(str(biggest))
 
-        print('Populating {}:'.format(self._populate_key))
+        # Automagically resize the listbox to fit the longest name.
+        names = map(lambda obj: obj['title'], self._data)
+        width = utils.listbox_width(names, max_width=60)
+        self.listbox.config(width=width)
+
+        # Populate the listbox.
+        print('Populating {}.'.format(self._populate_key))
         for issue in self._data:
             issue_number = str(issue['number']).zfill(zero_pad)
             item = ('#{} - {}').format(issue_number, issue['title'])
-            print('- {}'.format(item))
             self.listbox.insert('end', item)
-        print('Done.')
 
     def _select_callback(self, _widget, index):
         self.root.details.populate(self._data[index])
@@ -62,6 +69,9 @@ class Issues(tkinter.Frame):
         self.details = self._details_class(self)
         self.list.grid(row=0, column=0, sticky='nsew')
         self.details.grid(row=0, column=1, sticky='nsew')
+
+        grid.weight_row(self, 0, weight=1)
+        grid.weight_col(self, 1, weight=1)
 
     def populate(self, *args, **kwargs):
         self.list.populate(*args, **kwargs)

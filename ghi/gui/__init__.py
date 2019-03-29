@@ -7,6 +7,7 @@ from .details import Details
 
 from . import grid
 from . import window
+from . import utils
 
 
 class Gui(tkinter.Frame):
@@ -36,6 +37,10 @@ class Gui(tkinter.Frame):
         repos = ghi.repositories()
         self.details.populate(repos)
         self.repo_list.populate(repos)
+
+        repo_list_width = utils.listbox_width(ghi.repository_names())
+        print("Repo List Width = {}".format(repo_list_width))
+        self.repo_list.listbox.config(width=repo_list_width)
 
     def run(self):
         self.populate()

@@ -29,7 +29,7 @@ class Details(tkinter.Frame):
         self.repositories = repositories
 
     def select_repo(self, index):
-        print('details.select_repo({})'.format(index))
+        print('Selected repository index #{}.'.format(index))
 
         data = self.repositories[index]
         issues = data['issues']['nodes']
