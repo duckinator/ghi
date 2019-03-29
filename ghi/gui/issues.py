@@ -47,8 +47,9 @@ class IssueDetails(tkinter.Frame):
         self.title.grid(row=0, column=0, sticky='nsew')
         self.body.grid(row=1, column=0, sticky='nsew')
 
-        grid.weight(self, 0, 0, weight=0)
-        grid.weight(self, 1, 0, weight=1)
+        grid.weight_row(self, 0, weight=0)
+        grid.weight_row(self, 1, weight=1)
+        grid.weight_col(self, 0, weight=1)
 
     def populate(self, issue):
         title = '#{} - {}'.format(issue['number'], issue['title'])

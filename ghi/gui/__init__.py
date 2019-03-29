@@ -28,9 +28,12 @@ class Gui(tkinter.Frame):
 
         self.grid(row=0, column=0, sticky='nsew')
 
-        grid.weight(root, 0, 0, weight=1)
-        grid.weight(self, 0, 0, weight=0)
-        grid.weight(self, 0, 1, weight=1)
+        grid.weight_row(root, 0, weight=1)
+        grid.weight_col(root, 0, weight=1)
+
+        grid.weight_row(self, 0, weight=1)
+        grid.weight_col(self, 0, weight=0)
+        grid.weight_col(self, 1, weight=1)
 
     def populate(self):
         ghi = Ghi()

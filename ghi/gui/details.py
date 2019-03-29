@@ -21,9 +21,10 @@ class Details(tkinter.Frame):
         self.summary.grid(row=1, column=0, sticky='nsew')
         self.notebook.grid(row=2, column=0, sticky='nsew')
 
-        grid.weight(self, 0, 0, weight=0)
-        grid.weight(self, 1, 0, weight=0)
-        grid.weight(self, 2, 0, weight=1)
+        grid.weight_row(self, 0, weight=0)
+        grid.weight_row(self, 1, weight=0)
+        grid.weight_row(self, 2, weight=1)
+        grid.weight_col(self, 0, weight=1)
 
     def populate(self, repositories):
         self.repositories = repositories
