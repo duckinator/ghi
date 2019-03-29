@@ -20,5 +20,11 @@ def pluralize(number, singular, plural=None):
 
 
 def listbox_width(items, max_width=30):
+    """Calculate the width for a listbox, based on a list of strings and a
+    maximum width.
+
+    listbox_width(["foo", "bar", "asdf"], 10)       #=> 4 ("asdf")
+    listbox_width(["foo", "asdf", "beep boop"], 5)  #=> 5 (max_width)
+    """
     max_item_width = max(map(len, items))
     return min(max_width, max_item_width)
