@@ -2,7 +2,6 @@ import tkinter
 
 from .button_link import ButtonLink
 from .ghi_listbox import GhiListbox
-from . import grid
 from . import utils
 
 
@@ -47,9 +46,9 @@ class IssueDetails(tkinter.Frame):
         self.title.grid(row=0, column=0, sticky='nsew')
         self.body.grid(row=1, column=0, sticky='nsew')
 
-        grid.weight_row(self, 0, weight=0)
-        grid.weight_row(self, 1, weight=1)
-        grid.weight_col(self, 0, weight=1)
+        self.rowconfigure( 0, weight=0)
+        self.rowconfigure( 1, weight=1)
+        self.columnconfigure( 0, weight=1)
 
     def populate(self, issue):
         title = '#{} - {}'.format(issue['number'], issue['title'])
@@ -71,8 +70,8 @@ class Issues(tkinter.Frame):
         self.list.grid(row=0, column=0, sticky='nsew')
         self.details.grid(row=0, column=1, sticky='nsew')
 
-        grid.weight_row(self, 0, weight=1)
-        grid.weight_col(self, 1, weight=1)
+        self.rowconfigure( 0, weight=1)
+        self.columnconfigure( 1, weight=1)
 
     def populate(self, *args, **kwargs):
         self.list.populate(*args, **kwargs)

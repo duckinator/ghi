@@ -1,8 +1,6 @@
 import tkinter
 from tkinter import tix
 
-from . import grid
-
 
 class GhiListbox(tkinter.Frame):
     def __init__(self, root):
@@ -15,8 +13,8 @@ class GhiListbox(tkinter.Frame):
         self.listbox.bind('<<ListboxSelect>>', self.select_callback)
 
         self.scrolled_listbox.grid(row=0, column=0, sticky='nsew')
-        grid.weight_row(self, 0, weight=1)
-        grid.weight_col(self, 0, weight=1)
+        self.rowconfigure( 0, weight=1)
+        self.columnconfigure( 0, weight=1)
 
     def select(self, index):
         # Select item +index+.

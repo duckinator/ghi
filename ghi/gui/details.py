@@ -3,7 +3,6 @@ import tkinter
 from .button_link import ButtonLink
 from .issues_and_pull_requests import IssuesAndPullRequests
 from .utils import pluralize
-from . import grid
 
 
 class Details(tkinter.Frame):
@@ -21,10 +20,10 @@ class Details(tkinter.Frame):
         self.summary.grid(row=1, column=0, sticky='nsew')
         self.notebook.grid(row=2, column=0, sticky='nsew')
 
-        grid.weight_row(self, 0, weight=0)
-        grid.weight_row(self, 1, weight=0)
-        grid.weight_row(self, 2, weight=1)
-        grid.weight_col(self, 0, weight=1)
+        self.rowconfigure( 0, weight=0)
+        self.rowconfigure( 1, weight=0)
+        self.rowconfigure( 2, weight=1)
+        self.columnconfigure( 0, weight=1)
 
     def populate(self, repositories):
         self.repositories = repositories

@@ -5,7 +5,6 @@ from .. import Ghi
 from .repo_list import RepoList
 from .details import Details
 
-from . import grid
 from . import window
 from . import utils
 
@@ -28,12 +27,12 @@ class Gui(tkinter.Frame):
 
         self.grid(row=0, column=0, sticky='nsew')
 
-        grid.weight_row(root, 0, weight=1)
-        grid.weight_col(root, 0, weight=1)
+        root.rowconfigure(0, weight=1)
+        root.columnconfigure(0, weight=1)
 
-        grid.weight_row(self, 0, weight=1)
-        grid.weight_col(self, 0, weight=0)
-        grid.weight_col(self, 1, weight=1)
+        self.rowconfigure(0, weight=1)
+        self.columnconfigure(0, weight=0)
+        self.columnconfigure(1, weight=1)
 
     def populate(self):
         ghi = Ghi()
