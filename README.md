@@ -60,9 +60,22 @@ Make a file, `$HOME/.config/ghi/config.json`:
 
 After configuring it, just run `ghi`.
 
+## Development
+
+To get a working development environment:
+
+```
+$ git clone https://github.com/duckinator/ghi.git
+$ cd ghi
+$ python3 -m venv venv/ && . venv/bin/activate
+$ pip3 install bork
+```
+
+At this point, you can use `bork clean`, `bork build`, etc.
+
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/duckinator/emanate. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/duckinator/ghi. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 
@@ -70,4 +83,4 @@ The gem is available as open source under the terms of the [MIT License](http://
 
 ## Code of Conduct
 
-Everyone interacting in the ??? project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/duckinator/emanate/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the ghi project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/duckinator/emanate/blob/master/CODE_OF_CONDUCT.md).
